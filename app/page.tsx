@@ -26,7 +26,7 @@ export default function Home() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: '100vh',
+          minHeight: 'calc(100vh - 64px)',
           gap: 3,
         }}
       >
