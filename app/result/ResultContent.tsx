@@ -89,25 +89,31 @@ export default function ResultContent() {
   const { name, city, weather, countryData } = result
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg" sx={{ height: 'calc(100vh - 64px)', overflow: 'hidden' }}>
       <Box
         sx={{
-          py: 4,
-          minHeight: '100vh',
+          py: 2,
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
         }}
-      >     
+      >
+        <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 2 }}>
+          Your Results
+        </Typography>
 
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          {/* User Information */}
-          <Grid item xs={12}>
-            <Paper elevation={3} sx={{ p: 3 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                <Avatar sx={{ bgcolor: 'primary.main' }}>
-                  <PersonIcon />
-                </Avatar>
-                <Typography variant="h5">User Information</Typography>
-              </Box>
-              <Divider sx={{ mb: 2 }} />
+        <Box sx={{ flex: 1, overflow: 'auto' }}>
+          <Grid container spacing={2}>
+            {/* User Information */}
+            <Grid item xs={12}>
+              <Paper elevation={3} sx={{ p: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                  <Avatar sx={{ bgcolor: 'primary.main', width: 32, height: 32 }}>
+                    <PersonIcon fontSize="small" />
+                  </Avatar>
+                  <Typography variant="h6">User Information</Typography>
+                </Box>
+                <Divider sx={{ mb: 1.5 }} />
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body2" color="text.secondary">
@@ -117,7 +123,7 @@ export default function ResultContent() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <LocationOnIcon color="primary" />
+                    <LocationOnIcon color="primary" fontSize="small" />
                     <Box>
                       <Typography variant="body2" color="text.secondary">
                         City
@@ -130,18 +136,18 @@ export default function ResultContent() {
             </Paper>
           </Grid>
 
-          {/* Weather Information */}
-          <Grid item xs={12} md={6}>
-            <Card elevation={3}>
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                  <Avatar sx={{ bgcolor: 'info.main' }}>
-                    <ThermostatIcon />
-                  </Avatar>
-                  <Typography variant="h5">Weather</Typography>
-                </Box>
-                <Divider sx={{ mb: 2 }} />
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+            {/* Weather Information */}
+            <Grid item xs={12} md={6}>
+              <Card elevation={3} sx={{ height: '100%' }}>
+                <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                    <Avatar sx={{ bgcolor: 'info.main', width: 32, height: 32 }}>
+                      <ThermostatIcon fontSize="small" />
+                    </Avatar>
+                    <Typography variant="h6">Weather</Typography>
+                  </Box>
+                  <Divider sx={{ mb: 1.5 }} />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   {weather.temperature !== undefined && (
                     <Box>
                       <Typography variant="body2" color="text.secondary">
@@ -207,23 +213,40 @@ export default function ResultContent() {
             </Card>
           </Grid>
 
-          {/* Country Information */}
-          <Grid item xs={12} md={6}>
-            <Card elevation={3}>
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                  <Avatar sx={{ bgcolor: 'success.main' }}>
-                    <PublicIcon />
-                  </Avatar>
-                  <Typography variant="h5">Country Information</Typography>
-                </Box>
-                <Divider sx={{ mb: 2 }} />
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+            {/* Country Information */}
+            <Grid item xs={12} md={6}>
+              <Card elevation={3} sx={{ height: '100%' }}>
+                <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                    <Avatar sx={{ bgcolor: 'success.main', width: 32, height: 32 }}>
+                      <PublicIcon fontSize="small" />
+                    </Avatar>
+                    <Typography variant="h6">Country Information</Typography>
+                  </Box>
+                  <Divider sx={{ mb: 1.5 }} />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <Box>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                       Country Name
                     </Typography>
-                    <Typography variant="h6">{countryData.name}</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                      {countryData.flag && (
+                        <Box
+                          component="img"
+                          src={countryData.flag}
+                          alt={`${countryData.name} flag`}
+                          sx={{
+                            width: '40px',
+                            height: '30px',
+                            objectFit: 'cover',
+                            border: '1px solid',
+                            borderColor: 'divider',
+                            borderRadius: 0.5,
+                          }}
+                        />
+                      )}
+                      <Typography variant="h6">{countryData.name}</Typography>
+                    </Box>
                   </Box>
                   <Box>
                     <Typography variant="body2" color="text.secondary">
@@ -272,35 +295,14 @@ export default function ResultContent() {
                     </Typography>
                     <Typography variant="body1">{countryData.capital}</Typography>
                   </Box>
-                  {countryData.flag && (
-                    <Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                        <FlagIcon fontSize="small" color="action" />
-                        <Typography variant="body2" color="text.secondary">
-                          Flag
-                        </Typography>
-                      </Box>
-                      <Box
-                        component="img"
-                        src={countryData.flag}
-                        alt={`${countryData.name} flag`}
-                        sx={{
-                          maxWidth: '200px',
-                          height: 'auto',
-                          border: '1px solid',
-                          borderColor: 'divider',
-                          borderRadius: 1,
-                        }}
-                      />
-                    </Box>
-                  )}
                 </Box>
               </CardContent>
             </Card>
           </Grid>
-        </Grid>
+          </Grid>
+        </Box>
 
-        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center', pb: 2 }}>
           <Chip
             label="Start Over"
             onClick={() => {
